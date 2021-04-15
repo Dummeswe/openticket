@@ -14,33 +14,101 @@
 /* Connect to db */
 require_once('connectvars.php');
 
+$dbc = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME );
+/* Grab the ticket data from the POST */
+$issue = $_POST['issue-msg'];
+$urgency = $_POST['urgency-score'];
+$status = $_POST['status'];
+$extint = $_POST['extint'];
+$owner = $_POST['owner'];
+$creator = $_POST['creator'];
+/* write the data to database */
 
+$query = "INSERT INTO ticket
+         VALUES (0,
+         '$issue',
+         '$urgency',
+         '$status',
+         '$extint',
+         '$owner'
+         ,NOW())";
+mysqli_query($dbc,$query);
+
+
+
+mysqli_close($dbc);
 ?>
 
 <!-- The form -->
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
-
+<ul>
+    <li>
 <label for="issue">Issue:</label>
-<input type="text" id="issuestring" name="issue" value="<?php if(!empty($issue)) echo $issue;?>"/> <br>
+<textarea name="issue-msg" rows="4" cols="30" placeholder="What is the problem?" maxlength="200"></textarea>
+ </li>
 
+   <br>
+<li>
+    
 <label for="urgency">Urgency</label>
-<input type="text " id="urgency-id" name="urgency-score" value="<?php if (!empty($score))
-echo $score; ?>"/>
+<!-- Dropwdown -->
+<select name="urgency-score">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+    <option>6</option>
+    <option>7</option>
+    <option>8</option>
+    <option>9</option>
+    <option>10</option>
+</select>
+
+
+</li>
+
 
 <br>
+<li>
 <label for="status">Status</label>
-<input type="text" id="status-id" name="status" value="<?php if (!empty($status)) echo $status;?>"/>
+<select name="status" >
+    <option>new</option>
+    <option>in-progress</option>
+    <option>completed</option>
+    <option>wont-fix</option>
+    
+</select>
+
+</li>
 <br>
 
-<label for="status">externalinternal</label>
-<input type="text" id="extint-id" name="extint" value="<?php if (!empty($extint)) echo $extint;?>"/>
-<br>
 
-<label for="owner">owner:</label>
-    <input type="text" id="owner" name="owner" value="<?php if (!empty($owner)) echo $owner; ?>" />
+
+<li>
+<label for="extint">external</label>
+<select name="extint">
+    <option>internal</option>
+    <option>external</option>
+    
+    
+</select>
+</li>
+<br>
+<li>
+<label for="from">owner:</label>
+    <input type="text" id="owner" name="owner" value="notset" />
+    </li>
     <br />
-<input type="submit" value="add" name="submit"/>
 
+    <li>
+<label for="creator">creator:</label>
+<input type="text" id="creator" name="creator" value="Enter Your name"/>
+</li>
+<br>
+<input type="submit" value="add" name="submit"/>
+<input type="reset" value="reset" value="reset">
+</ul>
 
 
 
