@@ -23,7 +23,7 @@
     ORDER BY `ticket`.`timestamp` DESC";/* Newest first */
     $data = mysqli_query($dbc, $query);
 
-    /* Loop throiug array */
+    /* Loop throiug array This is really bad i know, i will fix it */
     echo '<table>';
     echo '<tr>';
     echo '<th>ID</th>';
